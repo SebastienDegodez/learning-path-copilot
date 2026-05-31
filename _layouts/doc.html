@@ -376,7 +376,7 @@ layout: default
      ============================================================ */
   .doc-content .task-list-item {
     list-style: none;
-    margin-left: -1.5rem;
+    margin-left: -1.5rem; /* cancels the 1.5rem left margin set on .doc-content ul */
     display: flex;
     align-items: flex-start;
     gap: 0.5em;
@@ -392,11 +392,17 @@ layout: default
     border-radius: 3px;
     background: transparent;
     cursor: default;
-    position: relative;
   }
   .doc-content .task-list-item input[type="checkbox"]:checked {
     background-color: var(--color-highlight);
-    /* Checkmark SVG — stroke colour matches the site's dark base (#0a1412 = rgba(10,20,18)) */
+    /*
+     * Checkmark drawn as an inline SVG background image.
+     * The stroke colour %230a1412 is the site's dark base (rgb(10,20,18)),
+     * identical to the rgba(10,20,18,…) value used elsewhere in this file
+     * for dark surfaces (e.g. pre code block background).
+     * CSS custom properties cannot be used inside data: URIs, so the value
+     * is intentionally hard-coded here to match that dark base colour.
+     */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 5l3 3L8.5 2' stroke='%230a1412' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
