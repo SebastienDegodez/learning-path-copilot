@@ -242,11 +242,13 @@ layout: default
     font-size: 0.85rem;
   }
 
-  /* Diff highlighting */
+  /* Diff highlighting — keep spans inline so each diff line stays a single
+     row inside <pre> (avoid the "two columns + horizontal scroll" effect that
+     occurs when .gd/.gi are forced to display:inline-block;width:100%). */
   .doc-content pre code .gd,
-  .highlight .gd { color: #f97583; background: rgba(255, 85, 85, 0.12); display: inline-block; width: 100%; }
+  .highlight .gd { color: #f97583; background: rgba(255, 85, 85, 0.12); }
   .doc-content pre code .gi,
-  .highlight .gi { color: #85e89d; background: rgba(85, 255, 85, 0.1); display: inline-block; width: 100%; }
+  .highlight .gi { color: #85e89d; background: rgba(85, 255, 85, 0.1); }
 
   /* Rouge syntax highlighting */
   .highlight .k, .highlight .kd, .highlight .kn, .highlight .kp,
@@ -318,6 +320,56 @@ layout: default
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--color-stripe);
   }
+
+  /* ============================================================
+     ADMONITIONS (:::note, :::tip, :::info, :::caution, :::warning, :::danger)
+     Rendered client-side from Docusaurus-style fences into
+     <div class="admonition admonition--TYPE">…</div> blocks.
+     ============================================================ */
+  .doc-content .admonition {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--color-highlight);
+    background: rgba(139, 229, 177, 0.06);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .doc-content .admonition > :first-child { margin-top: 0; }
+  .doc-content .admonition > :last-child { margin-bottom: 0; }
+  .doc-content .admonition__title {
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    color: var(--color-highlight);
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .doc-content .admonition--note,
+  .doc-content .admonition--info {
+    border-left-color: #58a6ff;
+    background: rgba(88, 166, 255, 0.08);
+  }
+  .doc-content .admonition--note .admonition__title,
+  .doc-content .admonition--info .admonition__title { color: #58a6ff; }
+  .doc-content .admonition--tip {
+    border-left-color: #3fb950;
+    background: rgba(63, 185, 80, 0.08);
+  }
+  .doc-content .admonition--tip .admonition__title { color: #3fb950; }
+  .doc-content .admonition--caution,
+  .doc-content .admonition--warning {
+    border-left-color: #f0b429;
+    background: rgba(240, 180, 41, 0.08);
+  }
+  .doc-content .admonition--caution .admonition__title,
+  .doc-content .admonition--warning .admonition__title { color: #f0b429; }
+  .doc-content .admonition--danger {
+    border-left-color: #f97583;
+    background: rgba(249, 117, 131, 0.08);
+  }
+  .doc-content .admonition--danger .admonition__title { color: #f97583; }
 </style>
 
 {% assign all_docs = site.pages
@@ -406,6 +458,79 @@ layout: default
 
   // Convert ```mermaid code blocks to rendered diagrams
   document.addEventListener('DOMContentLoaded', () => {
+    // ----- Admonitions :::TYPE [title] … ::: -----
+    // Kramdown (GFM, hard_wrap on) renders single newlines as <br>, so a
+    // Docusaurus-style admonition can either live inside one <p> or span
+    // several block elements when it contains blank lines.
+    (function transformAdmonitions() {
+      const root = document.querySelector('.doc-content');
+      if (!root) return;
+      const TYPES = ['note', 'tip', 'info', 'caution', 'warning', 'danger'];
+      const openRe = new RegExp('^:::(' + TYPES.join('|') + ')(?:\\s+([\\s\\S]*))?$', 'i');
+      const splitBr = (html) => html.split(/<br\s*\/?>/i);
+      const isClose = (line) => line.trim() === ':::';
+
+      const kids = Array.from(root.children);
+      let i = 0;
+      while (i < kids.length) {
+        const el = kids[i];
+        if (el.tagName !== 'P') { i++; continue; }
+        const lines = splitBr(el.innerHTML);
+        const m = lines[0].trim().match(openRe);
+        if (!m) { i++; continue; }
+
+        const type = m[1].toLowerCase();
+        const title = (m[2] || (type.charAt(0).toUpperCase() + type.slice(1))).trim();
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'admonition admonition--' + type;
+        const titleEl = document.createElement('div');
+        titleEl.className = 'admonition__title';
+        titleEl.innerHTML = title;
+        wrapper.appendChild(titleEl);
+
+        // Scan rest of the first paragraph for inline close marker
+        let closed = false;
+        const inlineCloseIdx = lines.findIndex((l, idx) => idx > 0 && isClose(l));
+        const bodyLines = inlineCloseIdx > 0 ? lines.slice(1, inlineCloseIdx) : lines.slice(1);
+        if (bodyLines.length && bodyLines.some(l => l.trim())) {
+          const p = document.createElement('p');
+          p.innerHTML = bodyLines.join('<br>');
+          wrapper.appendChild(p);
+        }
+        if (inlineCloseIdx > 0) closed = true;
+
+        // Replace opening <p> with wrapper and absorb following siblings
+        el.replaceWith(wrapper);
+        let j = i + 1;
+        while (!closed && j < kids.length) {
+          const next = kids[j];
+          if (next.tagName === 'P') {
+            const nlines = splitBr(next.innerHTML);
+            const closeIdx = nlines.findIndex(isClose);
+            if (closeIdx >= 0) {
+              const before = nlines.slice(0, closeIdx);
+              if (before.length && before.some(l => l.trim())) {
+                const p = document.createElement('p');
+                p.innerHTML = before.join('<br>');
+                wrapper.appendChild(p);
+              }
+              next.remove();
+              closed = true;
+              j++;
+              break;
+            }
+          }
+          wrapper.appendChild(next); // moves node from root into wrapper
+          j++;
+        }
+        i = j;
+        // Refresh kids snapshot since we mutated the tree
+        kids.splice(0, kids.length, ...Array.from(root.children));
+        i = Array.prototype.indexOf.call(root.children, wrapper) + 1;
+      }
+    })();
+
     document.querySelectorAll('pre > code.language-mermaid').forEach((block, i) => {
       const pre = block.parentElement;
       const div = document.createElement('div');
