@@ -370,6 +370,45 @@ layout: default
     background: rgba(249, 117, 131, 0.08);
   }
   .doc-content .admonition--danger .admonition__title { color: #f97583; }
+
+  /* ============================================================
+     TASK LIST (validation checklists — - [ ] and - [x])
+     ============================================================ */
+  .doc-content .task-list-item {
+    list-style: none;
+    margin-left: -1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5em;
+  }
+  .doc-content .task-list-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    border: 2px solid var(--color-highlight);
+    border-radius: 3px;
+    background: transparent;
+    cursor: default;
+    position: relative;
+  }
+  .doc-content .task-list-item input[type="checkbox"]:checked {
+    background: var(--color-highlight);
+  }
+  .doc-content .task-list-item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: -1px;
+    width: 4px;
+    height: 7px;
+    border: 2px solid #0a1412;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+  }
 </style>
 
 {% assign all_docs = site.pages
