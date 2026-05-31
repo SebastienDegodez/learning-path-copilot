@@ -459,15 +459,17 @@ layout: default
   // Convert ```mermaid code blocks to rendered diagrams
   document.addEventListener('DOMContentLoaded', () => {
     // ----- Admonitions :::TYPE [title] … ::: -----
-    // Kramdown (GFM, hard_wrap on) renders single newlines as <br>, so a
-    // Docusaurus-style admonition can either live inside one <p> or span
-    // several block elements when it contains blank lines.
+    // Kramdown (GFM) may render the whole admonition inside one <p> using
+    // literal newlines (no hard_wrap) OR split it across several block
+    // elements when blank lines appear inside. We therefore tokenise each
+    // paragraph by *both* <br> and newline so the open/close markers always
+    // land on their own logical line.
     (function transformAdmonitions() {
       const root = document.querySelector('.doc-content');
       if (!root) return;
       const TYPES = ['note', 'tip', 'info', 'caution', 'warning', 'danger'];
-      const openRe = new RegExp('^:::(' + TYPES.join('|') + ')(?:\\s+([\\s\\S]*))?$', 'i');
-      const splitBr = (html) => html.split(/<br\s*\/?>/i);
+      const openRe = new RegExp('^:::(' + TYPES.join('|') + ')(?:\\s+(.*))?$', 'i');
+      const splitBr = (html) => html.split(/<br\s*\/?>|\n/i);
       const isClose = (line) => line.trim() === ':::';
 
       const kids = Array.from(root.children);
