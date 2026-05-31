@@ -1,7 +1,7 @@
 ---
 id: 01-instructions-personnalisees
 title: "101 — Instructions personnalisées"
-sidebar_position: 2
+sidebar_position: 101
 description: "Donner à Copilot un cadre persistant avec .github/copilot-instructions.md et des instructions scopées via applyTo."
 ---
 
