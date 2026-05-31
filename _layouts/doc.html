@@ -395,19 +395,12 @@ layout: default
     position: relative;
   }
   .doc-content .task-list-item input[type="checkbox"]:checked {
-    background: var(--color-highlight);
-  }
-  .doc-content .task-list-item input[type="checkbox"]:checked::after {
-    content: '';
-    position: absolute;
-    left: 2px;
-    top: -1px;
-    width: 4px;
-    height: 7px;
-    border: 2px solid #0a1412;
-    border-top: none;
-    border-left: none;
-    transform: rotate(45deg);
+    background-color: var(--color-highlight);
+    /* Checkmark SVG — stroke colour matches the site's dark base (#0a1412 = rgba(10,20,18)) */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 5l3 3L8.5 2' stroke='%230a1412' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
   }
 </style>
 
