@@ -1,4 +1,4 @@
-# Plan — Alignement navigation `skraft-plugin` sur `learning-path-copilot`
+# Plan — Alignement de la navigation `skraft-plugin` sur `learning-path-copilot`
 
 **Date** : 2026-05-26  
 **Objectif** : simplifier la navigation du site `skraft-plugin` en reprenant les principes visibles dans `learning-path-copilot` : peu d’entrées globales, progression guidée à gauche, et contenu centré sur l’essentiel.
