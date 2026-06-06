@@ -267,6 +267,12 @@ La leçon est claire : un modèle *Powerful* comme GPT-5.5 coûte 15× plus en *
 > Citation: "GPT-5.5 … Output: $30.00" / "GPT-5 mini … Output: $2.00"
 > Fetched: 2026-05-28
 
+### Un seul modèle par session
+
+> **Garde le même modèle sur toute une session.** Changer de modèle en cours de session casse le cache de prompt, produit des résultats incohérents et gaspille des tokens — une session doit rester dédiée à un seul modèle.
+
+Le *cache de prompt* réutilise les tokens d'entrée déjà traités d'une requête à l'autre — ils sont alors facturés bien moins cher. Changer de modèle en cours de route invalide ce cache : tout le préfixe repasse au plein tarif. Si la phase suivante exige un autre modèle, tu ne changes pas de modèle dans la session — tu transfères le contexte proprement (voir [Module 316 — Déplacer le contexte entre modèles](../03-ingenierie-de-contexte/316-deplacer-contexte-modeles.md)).
+
 ### BYOK — Bring Your Own Key
 
 Si tu veux utiliser un modèle qui n'est pas intégré nativement, ou contrôler l'hébergement, tu peux apporter ta propre clé API.
@@ -347,3 +353,4 @@ Tu peux passer au module suivant si :
 3. https://docs.github.com/en/copilot/reference/ai-models/model-comparison
 4. https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing
 5. docs/learning-path/01-fondations/104-agents.md
+6. Retour d'expérience d'Ousmane BARRY (MVP Microsoft Foundry) — [publication LinkedIn](https://www.linkedin.com/posts/ousmanebarry_depuis-le-1er-juin-on-a-tous-vu-et-senti-ugcPost-7468560023623901184-K69e/) (règle « un seul modèle par session »)

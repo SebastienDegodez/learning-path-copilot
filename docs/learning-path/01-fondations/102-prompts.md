@@ -203,6 +203,8 @@ Utilise `describe` et `it`. Place le fichier de test à côté du fichier source
 - **Skills à invocation utilisateur** : après avoir compris les skills (module 03), tu découvriras comment remplacer tes `.prompt.md` par des skills dont on désactive `model invocation` — le prompt n'existe plus comme primitive séparée, il devient un skill que seul l'utilisateur déclenche. Ce module viendra après le module Skills dans le parcours.
 - `docs/reference/prompt-anatomy.md` — page de référence à créer.
 
+**Suivant** : [103 — Skills](./103-skills.md)
+
 ## Sources
 
 - [GitHub Docs — Creating prompt files](https://docs.github.com/en/copilot/customizing-copilot/adding-custom-instructions/creating-prompt-files)

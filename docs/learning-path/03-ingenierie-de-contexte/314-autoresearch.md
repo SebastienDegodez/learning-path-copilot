@@ -1,11 +1,11 @@
 ---
 id: autoresearch
-title: "312 — Autoresearch — méthodologie de skill"
-sidebar_position: 312
+title: "314 — Autoresearch — méthodologie de skill"
+sidebar_position: 314
 description: "Appliquer un cycle draft-eval-changelog pour produire des skills fiables au lieu de stubs."
 ---
 
-# 312 — Autoresearch — méthodologie de skill
+# 314 — Autoresearch — méthodologie de skill
 
 Durée estimée : 120 min
 
@@ -310,7 +310,7 @@ Tu peux passer au module suivant si :
 ## Pour aller plus loin
 
 - [Module 208 — Workflows](../02-composition/208-workflows.md) : orchestrer plusieurs skills testés dans un flux métier complet.
-- [Module 313 — Tester ses primitives](./313-evals.md) : aller plus loin avec des evals automatisés et des métriques de couverture.
+- [Module 315 — Tester ses primitives](./315-evals.md) : aller plus loin avec des evals automatisés et des métriques de couverture.
 - [Module 311 — Tokens, hallucinations et sobriété](./311-tokens-contexte.md) : comprendre pourquoi un skill trop long ou ambigu dégrade les résultats et consomme inutilement du contexte.
 - **Appliquer autoresearch aux agents** : la même discipline fonctionne pour les fichiers `.agent.md`. Remplace « skill » par « agent » et adapte tes evals au rôle de l'agent.
 - **Automatiser les evals** : pour les équipes avancées, les evals peuvent être scriptés en CI pour vérifier qu'un skill ne régresse pas après un merge.

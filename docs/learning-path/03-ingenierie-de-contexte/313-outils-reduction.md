@@ -1,11 +1,11 @@
 ---
 id: outils-reduction
-title: "315 — Outils de réduction (snip, minimal-context-tools)"
-sidebar_position: 315
+title: "313 — Outils de réduction (snip, minimal-context-tools)"
+sidebar_position: 313
 description: "Utiliser les outils CLI et plugins pour réduire concrètement la consommation de tokens : sous-agents, minimal-context-tools, snip."
 ---
 
-# 315 — Outils de réduction (snip, minimal-context-tools)
+# 313 — Outils de réduction (snip, minimal-context-tools)
 
 Durée estimée : 60 min · Complexité : ⭐⭐⭐ · Pré-requis : [Module 311](./311-tokens-contexte.md)
 
@@ -13,7 +13,7 @@ Durée estimée : 60 min · Complexité : ⭐⭐⭐ · Pré-requis : [Module 311
 
 ## Pourquoi ce module
 
-Tu sais pourquoi les tokens comptent ([Module 311](./311-tokens-contexte.md)) et comment tes patterns de design influencent la consommation ([Module 314](./314-patterns-sobriete.md)). Mais même avec un code bien structuré, l'agent charge des fichiers entiers, exécute des commandes verbeuses et accumule des milliers de tokens inutiles dans le contexte.
+Tu sais pourquoi les tokens comptent ([Module 311](./311-tokens-contexte.md)) et comment tes patterns de design influencent la consommation ([Module 312](./312-patterns-sobriete.md)). Mais même avec un code bien structuré, l'agent charge des fichiers entiers, exécute des commandes verbeuses et accumule des milliers de tokens inutiles dans le contexte.
 
 Ce module présente les trois familles d'outils qui réduisent mécaniquement cette consommation : les sous-agents pour isoler les lectures, les CLI ciblés pour extraire uniquement l'information pertinente, et snip pour filtrer les sorties terminal avant qu'elles n'atteignent le modèle.
 
@@ -96,6 +96,20 @@ snip init --agent copilot
 Snip supporte aussi Claude Code (`snip init`), Cursor (`--agent cursor`), Gemini CLI (`--agent gemini`), Codex (`--agent codex`) et une dizaine d'autres agents. 127 filtres couvrent git, go, cargo, npm, docker, kubectl, terraform, aws, gh et 80+ autres outils.
 
 Si aucun filtre ne correspond à une commande, elle passe inchangée — zéro overhead. Snip traque les économies dans une base SQLite locale et affiche un rapport via `snip stats`.
+
+### 4 RTK — l'alternative Rust
+
+[rtk](https://github.com/rtk-ai/rtk) (« Rust Token Killer ») poursuit le même objectif que snip — filtrer la sortie shell avant qu'elle n'atteigne le contexte — avec un binaire Rust unique, zéro dépendance et moins de 10 ms de surcoût. Il prend en charge plus de 100 commandes et filtre, regroupe, tronque et déduplique la sortie.
+
+| | snip | rtk |
+|---|---|---|
+| Langage | Go | Rust |
+| Réduction typique | ~60 à ~90 % | ~60 à ~90 % |
+| Couverture | 127 filtres YAML | 100+ commandes |
+| Surcoût | négligeable | &lt;10 ms |
+| Extensibilité | filtres YAML sans recompiler | intégrée |
+
+Les deux outils sont interchangeables : choisis snip si tu veux des filtres YAML déclaratifs et personnalisables, rtk si tu privilégies un binaire unique sans configuration.
 
 ## Mise en pratique
 
@@ -194,7 +208,7 @@ Tu as réussi ce module si :
 
 - **Plugin `minimal-context-tools`** — explore le dépôt `sebastiendegodez/copilot-instructions` pour voir comment les skills wrappent les CLI.
 - **Pipelines snip personnalisés** — crée un filtre YAML custom pour une commande spécifique à ton projet.
-- [Module 314 — Patterns de sobriété](./314-patterns-sobriete.md) — les principes de design qui complètent ces outils.
+- [Module 312 — Patterns de sobriété](./312-patterns-sobriete.md) — les principes de design qui complètent ces outils.
 - [Module 311 — Tokens & fenêtre de contexte](./311-tokens-contexte.md) — le cadre théorique.
 
 ## Sources
@@ -203,3 +217,4 @@ Tu as réussi ce module si :
 - [minimal-context-tools — sebastiendegodez/copilot-instructions](https://github.com/SebastienDegodez/copilot-instructions) — le plugin qui package les skills de réduction.
 - [ast-grep](https://ast-grep.github.io/) — documentation officielle du pattern matching AST.
 - [ripgrep](https://github.com/BurntSushi/ripgrep) — documentation officielle.
+- [rtk — rtk-ai/rtk](https://github.com/rtk-ai/rtk) — le « Rust Token Killer », alternative Rust à snip. Outil mis en avant par Ousmane BARRY (MVP Microsoft Foundry).

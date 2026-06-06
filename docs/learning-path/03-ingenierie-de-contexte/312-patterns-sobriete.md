@@ -1,11 +1,11 @@
 ---
 id: patterns-sobriete
-title: "314 — Patterns de sobriété"
-sidebar_position: 314
+title: "312 — Patterns de sobriété"
+sidebar_position: 312
 description: "Appliquer des principes de design (DDD, Object Calisthenics, SOLID, agents scopés) qui réduisent naturellement la consommation de tokens."
 ---
 
-# 314 — Patterns de sobriété
+# 312 — Patterns de sobriété
 
 Durée estimée : 45 min · Complexité : ⭐⭐⭐ · Pré-requis : [Module 311](./311-tokens-contexte.md)
 
@@ -31,7 +31,6 @@ Ce module t'apprend à transformer tes principes de design en leviers concrets d
 
 - [Module 311 — Tokens & fenêtre de contexte](./311-tokens-contexte.md) — tu dois comprendre pourquoi les tokens comptent.
 - [Module 103 — Skills](../01-fondations/103-skills.md) — tu dois savoir créer et déclencher un skill.
-- [Module 313 — Evals](./313-evals.md) — tu dois savoir écrire des `eval` binaires pour mesurer le delta.
 - Un dépôt Git contenant du code applicatif (au moins 3 fichiers de plus de 100 lignes).
 
 ## Concepts clés
@@ -120,7 +119,7 @@ Chaque `skill` chargé dans l'espace de travail ajoute du bruit au routeur séma
 
 3. **Le skill dégrade les résultats.** Un skill mal calibré peut forcer le modèle dans une direction sous-optimale.
 
-L'heuristique est simple. Si tu as mesuré le delta `with_skill` / `without_skill` lors du [Module 313](./313-evals.md) et que le score `without_skill` atteint 80 % ou plus, le skill est probablement inutile. Le modèle fait déjà bien le travail sans lui.
+L'heuristique est simple. Si tu mesures le delta `with_skill` / `without_skill` avec la méthode des evals ([Module 315](./315-evals.md)) et que le score `without_skill` atteint 80 % ou plus, le skill est probablement inutile. Le modèle fait déjà bien le travail sans lui.
 
 ## Mise en pratique
 
@@ -183,7 +182,7 @@ Tu as réussi ce module si :
 ## Pour aller plus loin
 
 - **Object Calisthenics en pratique** — applique les 9 règles à un module existant de ton projet et mesure l'impact sur la qualité des suggestions Copilot avant/après refactoring.
-- [Module 315 — Outils de réduction](./315-outils-reduction.md) — les outils qui implémentent la sobriété au niveau technique.
+- [Module 313 — Outils de réduction](./313-outils-reduction.md) — les outils qui implémentent la sobriété au niveau technique.
 - [Module 311 — Tokens & fenêtre de contexte](./311-tokens-contexte.md) — le cadre théorique de la sobriété.
 
 ## Sources
