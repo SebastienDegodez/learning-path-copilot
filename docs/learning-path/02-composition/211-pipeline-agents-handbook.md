@@ -214,7 +214,7 @@ Si le verdict est `CERTIFY`, l'orchestrateur sort et te dit que le draft est pr√
 sequenceDiagram
     actor U as Auteur humain
     participant O as orchestrator
-    participant FS as runtime/&lt;slug&gt;/
+    participant FS as runtime/[slug]/
     participant A as architect
     participant W as writer
     participant R as reviewer (FRESH)
