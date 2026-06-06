@@ -15,7 +15,7 @@ Durée estimée : 45 min · Complexité : ⭐⭐⭐ · Pré-requis : [Module 103
 
 Tu sais créer des `skill`, des `agent`, des workflows orchestrés et des `eval` binaires. Tu maîtrises les primitives. Mais une question reste en suspens : combien ces primitives *coûtent-elles* — en tokens, en latence, en qualité de signal ?
 
-La sobriété LLM n'est pas une contrainte budgétaire — c'est une discipline de conception. Ce module pose le cadre : pourquoi les tokens comptent, comment choisir le bon modèle, et comment auditer ses primitives. Les modules suivants ([314](./314-patterns-sobriete.md) et [315](./315-outils-reduction.md)) approfondissent les leviers concrets.
+La sobriété LLM n'est pas une contrainte budgétaire — c'est une discipline de conception. Ce module pose le cadre : pourquoi les tokens comptent, comment choisir le bon modèle, et comment auditer ses primitives. Les modules suivants ([312](./312-patterns-sobriete.md) et [313](./313-outils-reduction.md)) approfondissent les leviers concrets.
 
 À la fin de ce module, tu sais :
 
@@ -28,7 +28,6 @@ La sobriété LLM n'est pas une contrainte budgétaire — c'est une discipline 
 
 - [Module 103 — Skills](../01-fondations/103-skills.md) — tu dois savoir créer et déclencher un skill.
 - [Module 208 — Workflows](../02-composition/208-workflows.md) — tu dois maîtriser l'orchestration par sous-agents.
-- [Module 313 — Evals](./313-evals.md) — tu dois savoir écrire et interpréter des `eval` binaires.
 - VS Code avec l'extension GitHub Copilot activée.
 - Un dépôt Git contenant au moins deux agents et trois skills fonctionnels.
 
@@ -99,7 +98,7 @@ Pour chaque skill trouvé, note sa description (première ligne) et estime sa fr
 
 ### Étape 2 — Mesurer le delta d'un skill suspect
 
-Choisis un skill dont tu doutes de l'utilité. Exécute tes fixtures en mode `with_skill` puis `without_skill` (voir [Module 313](./313-evals.md)) :
+Choisis un skill dont tu doutes de l'utilité. Exécute tes fixtures en mode `with_skill` puis `without_skill` (voir [Module 315](./315-evals.md)) :
 
 ```yaml
 # Résultat attendu
@@ -183,8 +182,8 @@ Tu as réussi ce module si :
 
 - **Fenêtres de contexte** — explore les limites exactes des modèles que tu utilises. La documentation de chaque fournisseur publie la taille de fenêtre en tokens. Croise cette donnée avec la taille de tes skills + instructions + fichiers chargés pour estimer le taux d'occupation de ta fenêtre.
 - **Coût par workflow** — instrumente un workflow complet ([Module 208](../02-composition/208-workflows.md)) pour mesurer le nombre total de tokens consommés par exécution.
-- [Module 312 — Patterns de sobriété](./314-patterns-sobriete.md) — les principes de design (DDD, Object Calisthenics, SOLID) comme leviers de réduction.
-- [Module 313 — Outils de réduction](./315-outils-reduction.md) — sous-agents, minimal-context-tools, snip.
+- [Module 312 — Patterns de sobriété](./312-patterns-sobriete.md) — les principes de design (DDD, Object Calisthenics, SOLID) comme leviers de réduction.
+- [Module 313 — Outils de réduction](./313-outils-reduction.md) — sous-agents, minimal-context-tools, snip.
 - **Monitoring continu** — mets en place un suivi régulier (hebdomadaire) de ton ratio skills/effets et de tes choix de modèles.
 
 ## Sources
