@@ -308,7 +308,7 @@ Tu peux passer au module suivant si :
 
 ## Module suivant
 
-**Suivant** : [311 — Tokens et contexte](../03-ingenierie-de-contexte/311-tokens-contexte.md)
+**Suivant** : [212 — LSP — le Language Server Protocol avec Copilot](./212-lsp.md)
 
 ## Sources
 
